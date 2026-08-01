@@ -1,0 +1,18 @@
+# Utilities
+numpy
+pandas
+
+# Face recognition
+scikit-learn
+dlib-bin # It use for face detection and recognition.
+git+https://github.com/ageitgey/face_recognition_models # It use for detecting vectors points of face recognition.
+setuptools
+
+# Database
+supabase # free database for storing user data and face embedding with great performance and scalability.
+bcrypt # It use for hashing password and verifying password.
+
+segno # It use for generating QR code for user authentication.
+pillow # It use for image processing  and manipulation.
+
+streamlit # It use for building web application for user interface and interaction.
