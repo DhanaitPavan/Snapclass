@@ -76,8 +76,21 @@ def style_base_layout():
                 color: white !important; 
                 padding: 10px 20px !important;
                 border: none !important;
-                transition: transform 0.25s ease-in-out !important;  
+                transition: all 0.3s ease-in-out !important;
+
             }
+
+            div.stButton > button:hover {
+                background-color: #d43f3f !important;
+                transform: translateY(-2px);
+                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            /* Active / Click state */
+            div.stButton > button:active {
+                transform: translateY(0px);
+            }  
+            
 
             button[kind="secondary"]{ 
                 border-radius: 1.5rem !important;

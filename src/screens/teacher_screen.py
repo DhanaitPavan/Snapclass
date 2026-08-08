@@ -2,7 +2,7 @@ import streamlit as st
 from src.components.header import header_dashboard
 from src.components.footer import footer_dashboard
 from src.ui.base_layout import style_background_dashboard, style_base_layout
-
+from src.database.db import check_teacher_exist, create_teacher, teacher_login
 
 
 def teacher_screen():
@@ -10,10 +10,37 @@ def teacher_screen():
     style_background_dashboard()  # Apply the dashboard background style
     style_base_layout()  # Apply the base layout style
 
-    if 'teacher_login_state' not in st.session_state or st.session_state.teacher_login_state == "login":
+    if "teacher_data" in st.session_state:
+        teacher_dashboard()
+    elif 'teacher_login_state' not in st.session_state or st.session_state.teacher_login_state == "login":
         teacher_screen_login() 
     elif st.session_state.teacher_login_state == "register":
         teacher_screen_register()
+
+
+
+ 
+
+def teacher_dashboard():
+    teacher_data=st.session_state.teacher_data
+
+    st.header(f""" Welcome {teacher_data['name']}""")
+
+
+def login_teacher(username, password):
+    if not username or not password:
+        return False
+
+    teacher = teacher_login(username, password)
+
+    if teacher:
+        st.session_state.user_role='teacher'
+        st.session_state.teacher_data=teacher
+        st.session_state.is_logged_in =True
+        return True
+
+
+    return False
 
 def teacher_screen_login():
     c1, c2 = st.columns(2, vertical_alignment="center", gap="large")
@@ -27,7 +54,10 @@ def teacher_screen_login():
 
     st.header("Login using Password", text_alignment='center')
     st.space()
+
+
     teacher_username=st.text_input("Enter username", placeholder="eg.abc123")
+
     teacher_pass=st.text_input("Enter password", placeholder="Enter password", type="password")
 
     st.divider()  # Add a divider line
@@ -35,13 +65,35 @@ def teacher_screen_login():
     btn_col1, btn_col2 = st.columns(2)
 
     with btn_col1:
-        st.button("Login", key="loginbtn", type="secondary", shortcut="control+enter", icon=":material/passkey:", width='stretch')
+        if st.button("Login", key="loginbtn", type="secondary", shortcut="control+enter", icon=":material/passkey:", width='stretch'):
+            if login_teacher(teacher_username, teacher_pass):
+                st.toast("Welcome back!", icon="👋")
+                import time
+                time.sleep(1)
+                st.rerun()
+            else:
+                st.error("Invalid username and password!")
 
     with btn_col2:
         if st.button("Register", key="registerbtn", type="primary", icon=":material/person_add:", width='stretch'):
             st.session_state.teacher_login_state = "register"
 
     footer_dashboard()  # Call the footer function to display the footer
+
+
+def register_teacher(teacher_name, teacher_username, teacher_pass, teacher_pass_confirm):
+    if not teacher_name or not teacher_username or not teacher_pass:
+        return False, "Please fill in all fields."
+    if check_teacher_exist(teacher_username):
+        return False, "Username already exists. Please choose a different username."
+    if teacher_pass != teacher_pass_confirm:
+        return False, "Passwords do not match. Please try again."
+
+    try:
+        create_teacher(teacher_username, teacher_pass, teacher_name)
+        return True, "Teacher registered successfully. You can now log in."
+    except Exception as e:
+        return False, "Unexpected error!"
 
 def teacher_screen_register():
     c1, c2 = st.columns(2, vertical_alignment="center", gap="large")
@@ -68,7 +120,16 @@ def teacher_screen_register():
     btn_col1, btn_col2 = st.columns(2)
 
     with btn_col1:
-        st.button("Register now", shortcut="control+enter", icon=":material/passkey:", width='stretch')
+        if st.button("Register now", shortcut="control+enter", icon=":material/passkey:", width='stretch'):
+            success, message = register_teacher(teacher_name, teacher_username, teacher_pass, teacher_pass_confirm)
+            if success:
+                st.success(message)
+                import time
+                time.sleep(2)  # Wait for 2 seconds before switching to login screen
+                st.session_state.teacher_login_type = "login"
+                st.rerun()  # Rerun the app to switch to the login screen
+            else:
+                st.error(message) 
 
     with btn_col2:
         if st.button("Login Instead", type="primary", icon=":material/passkey:", width='stretch'):
