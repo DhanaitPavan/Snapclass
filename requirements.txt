@@ -16,3 +16,8 @@ segno # It use for generating QR code for user authentication.
 pillow # It use for image processing  and manipulation.
 
 streamlit # It use for building web application for user interface and interaction.
+
+librosa # load , edit ,segment the voice from audio file
+resemblyzer # It will create an embedding of voice file
+
+webrtcvad
