@@ -20,4 +20,4 @@ streamlit # It use for building web application for user interface and interacti
 librosa # load , edit ,segment the voice from audio file
 resemblyzer # It will create an embedding of voice file
 
-webrtcvad
+webrtcvad-wheels
