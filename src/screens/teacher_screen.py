@@ -34,6 +34,7 @@ def teacher_dashboard():
         st.subheader(f""" Welcome {teacher_data['name']}""")
         if st.button("Logout", type="secondary", key="loginbackbtn", shortcut="control+backspace"):
             st.session_state['is_logged_in'] = False
+            del st.session_state.teacher_data
             st.rerun() 
 
     st.space()
@@ -91,7 +92,7 @@ def teacher_tab_manage_subjects():
     if subjects:
         for sub in subjects:
             stats=[
-                ("🫂", "Students", sub['total_student']),
+                ("🫂", "Students", sub['total_students']),
                 ("🕰️", "Classes", sub['total_classes']),
             ]
         def share_btn():
