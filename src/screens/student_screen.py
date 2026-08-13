@@ -14,9 +14,18 @@ from src.components.dialog_enroll import enroll_dialog
 from src.components.subject_card import subject_card
 
 def student_dashboard():
-    student_data=st.session_state.student_data
-    # Correct line
-    student_id = st.session_state.student_data['student_id']
+    # 1. Safety check: Ensure student_data actually exists and is not None
+    if 'student_data' not in st.session_state or st.session_state.student_data is None:
+        st.warning("Please log in to access the dashboard.")
+        # Optional: Add a button to redirect to login page, or just stop execution
+        if st.button("Go to Login"):
+            st.session_state['is_logged_in'] = False
+            st.rerun()
+        return  # Stops the function here so it doesn't crash below
+
+    # 2. Safe to proceed now
+    student_data = st.session_state.student_data
+    student_id = student_data['student_id']
 
 
     c1, c2 = st.columns(2, vertical_alignment="center", gap="large")
@@ -67,7 +76,7 @@ def student_dashboard():
 
         stats=stats_map.get(sid, {'total':0, 'attended':0})
         def unenroll_btn():
-            if st.button('Unenroll from this course', type='tertiary', width='stretch',icon=':material/delete_forever:'):
+            if st.button('Unenroll from this course', type='tertiary', width='stretch',icon=':material/delete_forever:',key='button_key'):
                 unenroll_student_to_subject(student_id, sid)
                 st.toast(f'Unenrolled from this {sub['name']} sucessfully!')
                 st.rerun()
