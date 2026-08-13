@@ -41,7 +41,7 @@ def teacher_dashboard():
     with c1:
         header_dashboard()
     with c2:
-        st.subheader(f""" Welcome {teacher_data['name']}""")
+        st.subheader(f"👋 Welcome, {teacher_data['name']}")
         if st.button("Logout", type="secondary", key="loginbackbtn", shortcut="control+backspace"):
             st.session_state['is_logged_in'] = False
             del st.session_state.teacher_data
@@ -192,39 +192,51 @@ def teacher_tab_take_attendence():
 
 
 def teacher_tab_manage_subjects():
-    teacher_id=st.session_state.teacher_data['teacher_id']
-    col1, col2=st.columns(2)
+    teacher_id = st.session_state.teacher_data['teacher_id']
+    
+    # Grid layout for the header actions
+    col1, col2 = st.columns([3, 1])  # 3:1 ratio handles sizing better than 'width'
     with col1:
-        st.header("Manage Subjects", width='stretch')
+        st.header("Manage Subjects")
 
     with col2:
-        if st.button('Create New Subject', width='stretch'):
+        # Streamlit buttons automatically stretch to container width inside columns
+        if st.button('Create New Subject', use_container_width=True):
             create_subject_dialog(teacher_id)
 
-    #List all Subjects
-    subjects=get_teacher_subjects(teacher_id)
+    # Fetch and list all Subjects
+    subjects = get_teacher_subjects(teacher_id)
+    
     if subjects:
         for sub in subjects:
-            stats=[
+            # Stats dynamically built for the current subject
+            stats = [
                 ("🫂", "Students", sub['total_students']),
                 ("🕰️", "Classes", sub['total_classes']),
             ]
-        def share_btn():
-            if st.button(f"Share Code: {sub['name']}", key=f"share_{sub['subject_code']}", icon=":material/share:"):
-                share_dialog_subject(sub['name'], sub['subject_code'])
-                st.space()
+            
+            # Use unique keys by embedding the subject code
+            button_key = f"share_{sub['subject_code']}"
+            
+            # Inline callback layout using a lambda to pass correct arguments safely
+            def make_footer_callback(s_name=sub['name'], s_code=sub['subject_code']):
+                def callback():
+                    if st.button(f"Share Code: {s_name}", key=button_key, icon=":material/share:",width='content'):
+                        share_dialog_subject(s_name, s_code)
+                return callback
 
-
-        subject_card(
-            name=sub['name'],
-            code=sub['subject_code'],
-            section=sub['section'],
-            stats=stats,
-            footer_callback=share_btn
-        )
-
+            # Render the card inside the loop so all subjects appear
+            subject_card(
+                name=sub['name'],
+                code=sub['subject_code'],
+                section=sub['section'],
+                stats=stats,
+                footer_callback=make_footer_callback()
+            )
+            st.divider()
     else:
         st.info("NO SUBJECT FOUND. CREATE ONE ABOVE")
+
 
 
 def teacher_tab_attendence_records():
