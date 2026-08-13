@@ -1,3 +1,4 @@
+streamlit
 # Utilities
 numpy
 pandas
@@ -6,7 +7,7 @@ pandas
 scikit-learn
 dlib-bin # It use for face detection and recognition.
 git+https://github.com/ageitgey/face_recognition_models # It use for detecting vectors points of face recognition.
-setuptools
+setuptools<70.0.0
 
 # Database
 supabase # free database for storing user data and face embedding with great performance and scalability.
