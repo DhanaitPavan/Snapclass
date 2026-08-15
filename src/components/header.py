@@ -2,7 +2,7 @@ import streamlit as st
 
 def header_home():
     
-    logo_url = "https://i.ibb.co/1Jj94M07/dc8bc56f-16ca-424f-ab25-dfad5d9b967f.png"   
+    logo_url = "https://i.ibb.co/SDyFnCcW/dc8bc56f-16ca-424f-ab25-dfad5d9b967f.png"
 
     st.markdown(f"""
     <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; margin-bottom: 30px; margin-top: 30px;">
@@ -14,7 +14,7 @@ def header_home():
 
 def header_dashboard():
     
-    logo_url = "https://i.ibb.co/1Jj94M07/dc8bc56f-16ca-424f-ab25-dfad5d9b967f.png"   
+    logo_url = "https://i.ibb.co/SDyFnCcW/dc8bc56f-16ca-424f-ab25-dfad5d9b967f.png"   
 
     st.markdown(f"""
     <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">

@@ -7,7 +7,7 @@ from src.components.dialog_auto_enroll import auto_enroll_dialog
 def main():
     st.set_page_config(
         page_title="CaptClass - Smart AI Attendance App",
-        page_icon="https://i.ibb.co/1Jj94M07/dc8bc56f-16ca-424f-ab25-dfad5d9b967f.png"
+        page_icon="https://i.ibb.co/SDyFnCcW/dc8bc56f-16ca-424f-ab25-dfad5d9b967f.png"
     )
     if 'login_type' not in st.session_state:
         st.session_state['login_type'] = None
