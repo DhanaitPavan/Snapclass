@@ -41,9 +41,9 @@ def style_base_layout():
 
         /* Hide Top bar of Streamlit */
 
-            # #MainMenu, header, footer {
-            #     visibility: hidden;
-            # }
+            #MainMenu, header, footer {
+                visibility: hidden;
+            }
             
             .block-container {
                 padding-top:1.5rem; !important;
