@@ -25,7 +25,9 @@ def add_photos_dialog():
     with t2:
         type_upload = "primary" if st.session_state.photo_tab == 'upload' else 'tertiary'
         if st.button('Upload photos', type=type_upload, width='stretch'):
-            st.session_state.photo_tab = 'upload'
+            with st.spinner("Uploading photos.."):
+                st.session_state.photo_tab = 'upload'
+                time.sleep(1)
 
     if st.session_state.photo_tab == 'camera':
         cam_photo = st.camera_input('Take Snapshot', key='dialog_cam')

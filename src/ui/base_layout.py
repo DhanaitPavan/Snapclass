@@ -5,12 +5,12 @@ def style_background_home():
     <style>
         .stApp {
 
-            background : #5865F2 !important;
+            background : #8A30C2 !important;
             
             }
 
         .stApp [data-testid="stColumn"] {
-            background-color: #E0E3FF !important;
+            background-color: #F0DDF0 !important;
             padding: 2.5rem !important;
             border-radius: 5rem !important;
 
@@ -26,7 +26,7 @@ def style_background_dashboard():
     
         .stApp {
 
-            background: #E0E3FF !important;
+            background: #F0DDF0 !important;
             
             }
     </style>
@@ -41,9 +41,9 @@ def style_base_layout():
 
         /* Hide Top bar of Streamlit */
 
-            #MainMenu, header, footer {
-                visibility: hidden;
-            }
+            # #MainMenu, header, footer {
+            #     visibility: hidden;
+            # }
             
             .block-container {
                 padding-top:1.5rem; !important;

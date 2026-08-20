@@ -26,11 +26,13 @@ def student_dashboard():
         st.subheader(f'👋 Welcome, {student_data["name"]}')
 
         if st.button("Logout", type="secondary", key="logoutbtn", shortcut="control+backspace"):
-            st.session_state['is_logged_in'] = False
-            if 'student_data' in st.session_state:
-                del st.session_state['student_data']
-            st.session_state['login_type'] = 'student'
-            st.rerun() 
+            with st.spinner("Student Logout..."):
+                st.session_state['is_logged_in'] = False
+                if 'student_data' in st.session_state:
+                    del st.session_state['student_data']
+                st.session_state['login_type'] = 'student'
+                time.sleep(2)
+                st.rerun() 
 
     st.space()
 
@@ -112,8 +114,10 @@ def student_screen():
         header_dashboard()
     with c2:
         if st.button("Go back to Home", type='secondary', key='loginbackbtn', shortcut="control+backspace"):
-            st.session_state['login_type'] = None
-            st.rerun()
+            with st.spinner("Going to Home..."):
+                st.session_state['login_type'] = None
+                time.sleep(2)
+                st.rerun()
 
     st.header('Login using FaceID', text_alignment='center')
     st.space()
@@ -184,7 +188,7 @@ def student_screen():
                                 st.session_state.user_role = 'student'
                                 st.session_state.student_data = response_data[0]
                                 st.toast(f'Profile Created! Hi {new_name}!')
-                                time.sleep(1)
+                                time.sleep(2)
                                 st.rerun()
                         else:
                             st.error('Couldnt capture your facial features for registration')

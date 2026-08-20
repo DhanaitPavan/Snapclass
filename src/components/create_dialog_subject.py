@@ -1,5 +1,6 @@
 import streamlit as st
 from src.database.db import create_subject
+import time
 
 @st.dialog("Create New Subject")
 def create_subject_dialog(teacher_id):
@@ -9,13 +10,15 @@ def create_subject_dialog(teacher_id):
     sub_section=st.text_input("Section", placeholder="Eg. A")
 
     if st.button("Create Subject Now", type="primary", width='stretch'):
-        if sub_id and sub_name and sub_section:
-            try:
-                create_subject(sub_id, sub_name, sub_section, teacher_id)
-                st.toast("Subject Created Successfully!")
-                st.rerun()
+        with st.spinner("Creating Subject..."):
+            if sub_id and sub_name and sub_section:
+                try:
+                    create_subject(sub_id, sub_name, sub_section, teacher_id)
+                    st.toast("Subject Created Successfully!")
+                    time.sleep(1.2)
+                    st.rerun()
 
-            except Exception as e:
-                st.error(f"Error: {str(e)}")
-        else:
-            st.warning("Please fill all the fields")
+                except Exception as e:
+                    st.error(f"Error: {str(e)}")
+            else:
+                st.warning("Please fill all the fields")

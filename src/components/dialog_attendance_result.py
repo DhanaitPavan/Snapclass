@@ -14,27 +14,30 @@ def show_attendance_result(df, logs):
 
     with col1:
         if st.button('Discard', width='stretch'):
-            
-            st.session_state.voice_attendance_results = None
-            st.session_state.attendance_images = []
-            st.rerun()
+            with st.spinner("Discarding.."):
+                st.session_state.voice_attendance_results = None
+                st.session_state.attendance_images = []
+                time.sleep(0.7)
+                st.rerun()
 
     with col2:
         if st.button('Confirm & Save', width='stretch', type='primary'):
-            success = False
-            try:
-                create_attendance(logs)
-                st.toast("Attendance taken")
-                st.session_state.attendance_images = []
-                st.session_state.voice_attendance_results = None
-                success = True
-            except Exception as e:
-                print(f"Database Error: {e}")
-                st.error(f'Sync failed! Error: {e}')
+            with st.spinner("Saving records..."):
+                success = False
+                try:
+                    create_attendance(logs)
+                    st.toast("Attendance taken")
+                    st.session_state.attendance_images = []
+                    st.session_state.voice_attendance_results = None
+                    time.sleep(0.5) 
+                    success = True
+                except Exception as e:
+                    print(f"Database Error: {e}")
+                    st.error(f'Sync failed! Error: {e}')
 
-            if success:
-                time.sleep(0.5) # Optional: gives the toast a moment to display
-                st.rerun()
+                if success:
+                    time.sleep(0.5) # Optional: gives the toast a moment to display
+                    st.rerun()
 
 
 
