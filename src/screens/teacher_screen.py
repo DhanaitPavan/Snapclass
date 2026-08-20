@@ -60,23 +60,26 @@ def teacher_dashboard():
     with tab1:
         type1="primary" if st.session_state.current_teacher_tab== 'take_attendence' else "tertiary"
         if st.button('Take Attendence', type=type1 ,width='stretch', icon=':material/ar_on_you:'):
-            st.session_state.current_teacher_tab= 'take_attendence'
-            time.sleep(1)
-            st.rerun()
+            with st.spinner("Loading Tab.."):
+                st.session_state.current_teacher_tab= 'take_attendence'
+                time.sleep(0.9)
+                st.rerun()
 
     with tab2:
         type2="primary" if st.session_state.current_teacher_tab== 'manage_subjects' else "tertiary"
         if st.button('Manage Subjects',type=type2 ,width='stretch', icon=':material/book_ribbon:'):
-            st.session_state.current_teacher_tab= 'manage_subjects'
-            time.sleep(1)
-            st.rerun()
+            with st.spinner("Loading Tab.."):
+                st.session_state.current_teacher_tab= 'manage_subjects'
+                time.sleep(0.9)
+                st.rerun()
 
     with tab3:
         type3="primary" if st.session_state.current_teacher_tab== 'attendence_records' else "tertiary"
         if st.button('Attendence Records',type=type3 , width='stretch', icon=':material/cards_stack:'):
-            st.session_state.current_teacher_tab= 'attendence_records'
-            time.sleep(1)
-            st.rerun()
+            with st.spinner("Loading Tab.."):
+                st.session_state.current_teacher_tab= 'attendence_records'
+                time.sleep(0.9)
+                st.rerun()
 
     if st.session_state.current_teacher_tab=='take_attendence':
         teacher_tab_take_attendence()
